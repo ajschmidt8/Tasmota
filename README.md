@@ -17,7 +17,9 @@ pio run -t upload --upload-port /dev/ttyUSB0 # --upload-port from pio device lis
 ### Garage
 
 **Switch 1 (closed)**: GPIO4 (D2)
+
 **Switch 2 (opened)**: GPIO5 (D1)
+
 **Relay 1i**: GPIO12 (D6)
 
 ```
