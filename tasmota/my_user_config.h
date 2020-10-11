@@ -44,13 +44,27 @@
 \*********************************************************************************************/
 
 // -- Master parameter control --------------------
+<<<<<<< HEAD
 #define CFG_HOLDER 4617 // [Reset 1] Change this value (max 32000) to load SECTION1 configuration parameters to flash
+=======
+#define CFG_HOLDER             4617              // [Reset 1] Change this value (max 32000) to load SECTION1 configuration parameters to flash
+                                                 // If following define is disabled it increases configuration corruption detection BUT
+                                                 //  it only allows firmware upgrades starting from version 6.6.0.11
+//#define CFG_LEGACY_LOAD                          // Support for firmware upgrades from version 6.0.0
+>>>>>>> v8.5.1
 
 // -- Project -------------------------------------
 #define PROJECT "tasmota" // PROJECT is used as the default topic delimiter
 
 // If not selected the default will be SONOFF_BASIC
-//#define MODULE                 SONOFF_BASIC      // [Module] Select default model from tasmota_template.h
+//#define MODULE                 SONOFF_BASIC      // [Module] Select default module from tasmota_template.h
+#ifdef ESP8266
+#define FALLBACK_MODULE        SONOFF_BASIC      // [Module2] Select default module on fast reboot where USER_MODULE is user template
+//#define USER_TEMPLATE "{\"NAME\":\"Generic\",\"GPIO\":[255,255,255,255,255,255,255,255,255,255,255,255,255],\"FLAG\":15,\"BASE\":18}"  // [Template] Set JSON template
+#else // ESP32
+#define FALLBACK_MODULE        WEMOS             // [Module2] Select default module on fast reboot where USER_MODULE is user template
+//#define USER_TEMPLATE "{\"NAME\":\"ESP32-DevKit\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,1],\"FLAG\":0,\"BASE\":1}"  // [Template] Set JSON template
+#endif
 
 #define SAVE_DATA 1        // [SaveData] Save changed parameters to Flash (0 = disable, 1 - 3600 seconds)
 #define SAVE_STATE true    // [SetOption0] Save changed power state to Flash (false = disable, true = enable)
@@ -83,6 +97,7 @@
 #define MQTT_LOG_LEVEL LOG_LEVEL_NONE   // [MqttLog] (LOG_LEVEL_NONE, LOG_LEVEL_ERROR, LOG_LEVEL_INFO, LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG_MORE)
 
 // -- Ota -----------------------------------------
+<<<<<<< HEAD
 #define OTA_URL "http://thehackbox.org/tasmota/release/tasmota.bin" // [OtaUrl]
 #define OTA_COMPATIBILITY false                                     // [SetOption78] Disable OTA compatibility check
 
@@ -102,6 +117,27 @@
 #define MQTT_SENSOR_RETAIN false  // [SensorRetain] Sensor may send retain flag (false = off, true = on)
 #define MQTT_NO_HOLD_RETAIN false // [SetOption62] Disable retain flag on HOLD messages
 //#define MQTT_NO_RETAIN                         // Disable all retain flags (including LWT!) if unsupported by broker (eg Losant)
+=======
+#define OTA_URL                "http://ota.tasmota.com/tasmota/release/tasmota.bin"  // [OtaUrl]
+#define OTA_COMPATIBILITY      false             // [SetOption78] Disable OTA compatibility check
+
+// -- MQTT ----------------------------------------
+#define MQTT_USE               true              // [SetOption3] Select default MQTT use (false = Off, true = On)
+
+#define MQTT_HOST              ""                // [MqttHost]
+#define MQTT_FINGERPRINT1      "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"  // [MqttFingerprint1] (auto-learn)
+#define MQTT_FINGERPRINT2      "DA 39 A3 EE 5E 6B 4B 0D 32 55 BF EF 95 60 18 90 AF D8 07 09"  // [MqttFingerprint2] (invalid)
+#define MQTT_PORT              1883              // [MqttPort] MQTT port (10123 on CloudMQTT)
+#define MQTT_USER              "DVES_USER"       // [MqttUser] MQTT user
+#define MQTT_PASS              "DVES_PASS"       // [MqttPassword] MQTT password
+
+#define MQTT_BUTTON_RETAIN     false             // [ButtonRetain] Button may send retain flag (false = off, true = on)
+#define MQTT_POWER_RETAIN      false             // [PowerRetain] Power status message may send retain flag (false = off, true = on)
+#define MQTT_SWITCH_RETAIN     false             // [SwitchRetain] Switch may send retain flag (false = off, true = on)
+#define MQTT_SENSOR_RETAIN     false             // [SensorRetain] Sensor may send retain flag (false = off, true = on)
+#define MQTT_NO_HOLD_RETAIN    false             // [SetOption62] Disable retain flag on HOLD messages
+#define MQTT_NO_RETAIN         false             // [SetOption104] No Retain - disable all MQTT retained messages, some brokers don't support it: AWS IoT, Losant
+>>>>>>> v8.5.1
 
 #define MQTT_STATUS_OFF "OFF"     // [StateText1] Command or Status result when turned off (needs to be a string like "0" or "Off")
 #define MQTT_STATUS_ON "ON"       // [StateText2] Command or Status result when turned on (needs to be a string like "1" or "On")
@@ -118,12 +154,21 @@
 #define PUB_PREFIX2 "tele" // [Prefix3] Tasmota devices publish telemetry data to %prefix%/%topic% being PUB_PREFIX2/MQTT_TOPIC/UPTIME, POWER and TIME \
                            //   May be named the same as PUB_PREFIX
 // %topic% token options (also ButtonTopic and SwitchTopic)
+<<<<<<< HEAD
 #define MQTT_TOPIC PROJECT "_%06X"   // [Topic] unique MQTT device topic including device MAC address
 #define MQTT_GRPTOPIC "tasmotas"     // [GroupTopic] MQTT Group topic
 #define MQTT_GROUPTOPIC_FORMAT false // [SetOption75] GroupTopic replaces %topic% (false) or fixed topic cmnd/grouptopic (true)
 #define MQTT_BUTTON_TOPIC "0"        // [ButtonTopic] MQTT button topic, "0" = same as MQTT_TOPIC, set to 'PROJECT "_BTN_%06X"' for unique topic including device MAC address
 #define MQTT_SWITCH_TOPIC "0"        // [SwitchTopic] MQTT button topic, "0" = same as MQTT_TOPIC, set to 'PROJECT "_SW_%06X"' for unique topic including device MAC address
 #define MQTT_CLIENT_ID "DVES_%06X"   // [MqttClient] Also fall back topic using Chip Id = last 6 characters of MAC address
+=======
+#define MQTT_TOPIC             PROJECT "_%06X"   // [Topic] unique MQTT device topic including (part of) device MAC address
+#define MQTT_GRPTOPIC          "tasmotas"        // [GroupTopic] MQTT Group topic
+#define MQTT_GROUPTOPIC_FORMAT false             // [SetOption75] GroupTopic replaces %topic% (false) or fixed topic cmnd/grouptopic (true)
+#define MQTT_BUTTON_TOPIC      "0"               // [ButtonTopic] MQTT button topic, "0" = same as MQTT_TOPIC, set to 'PROJECT "_BTN_%06X"' for unique topic including device MAC address
+#define MQTT_SWITCH_TOPIC      "0"               // [SwitchTopic] MQTT button topic, "0" = same as MQTT_TOPIC, set to 'PROJECT "_SW_%06X"' for unique topic including device MAC address
+#define MQTT_CLIENT_ID         "DVES_%06X"       // [MqttClient] Also fall back topic using last 6 characters of MAC address or use "DVES_%12X" for complete MAC address
+>>>>>>> v8.5.1
 
 // -- MQTT - Telemetry ----------------------------
 #define TELE_PERIOD 300     // [TelePeriod] Telemetry (0 = disable, 10 - 3600 seconds)
@@ -133,6 +178,7 @@
 #define DOMOTICZ_UPDATE_TIMER 0 // [DomoticzUpdateTimer] Send relay status (0 = disable, 1 - 3600 seconds)
 
 // -- MQTT - Home Assistant Discovery -------------
+<<<<<<< HEAD
 #define HOME_ASSISTANT_DISCOVERY_ENABLE false // [SetOption19] Home Assistant Discovery (false = Disable, true = Enable)
 #define HASS_AS_LIGHT false                   // [SetOption30] Enforce HAss autodiscovery as light
 
@@ -151,6 +197,30 @@
 #define FRIENDLY_NAME "Tasmota" // [FriendlyName] Friendlyname up to 32 characters used by webpages and Alexa
 #define EMULATION EMUL_NONE     // [Emulation] Select Belkin WeMo (single relay/light) or Hue Bridge emulation (multi relay/light) (EMUL_NONE, EMUL_WEMO or EMUL_HUE)
 #define CORS_DOMAIN ""          // [Cors] CORS Domain for preflight requests
+=======
+#define HOME_ASSISTANT_DISCOVERY_ENABLE   false  // [SetOption19] Home Assistant Discovery (false = Disable, true = Enable)
+#define HASS_AS_LIGHT          false             // [SetOption30] Enforce HAss autodiscovery as light
+//#define DEEPSLEEP_LWT_HA_DISCOVERY             // Enable LWT topic and its payloads for read-only sensors (Status sensor not included) and binary_sensors on HAss Discovery (Commented out: all read-only sensors and binary_sensors
+                                                 // won't be shown as OFFLINE on Home Assistant when the device is DeepSleeping - NOTE: This is only for read-only sensors and binary_sensors, relays will be shown as OFFLINE)
+
+// -- MQTT - Options ------------------------------
+#define MQTT_RESULT_COMMAND    false             // [SetOption4]  Switch between MQTT RESULT or COMMAND
+#define MQTT_LWT_MESSAGE       false             // [SetOption10] Switch between MQTT LWT OFFLINE or empty message
+#define MQTT_POWER_FORMAT      false             // [SetOption26] Switch between POWER or POWER1 for single power devices
+#define MQTT_APPEND_TIMEZONE   false             // [SetOption52] Append timezone to JSON time
+#define MQTT_BUTTON_SWITCH_FORCE_LOCAL   false   // [SetOption61] Force local operation when button/switch topic is set (false = off, true = on)
+#define MQTT_INDEX_SEPARATOR   false             // [SetOption64] Enable "_" instead of "-" as sensor index separator
+#define MQTT_TUYA_RECEIVED     false             // [SetOption66] Enable TuyaMcuReceived messages over Mqtt
+#define MQTT_TLS_ENABLED       false             // [SetOption103] Enable TLS mode (requires TLS version)
+
+// -- HTTP ----------------------------------------
+#define WEB_SERVER             2                 // [WebServer] Web server (0 = Off, 1 = Start as User, 2 = Start as Admin)
+#define WEB_PASSWORD           ""                // [WebPassword] Web server Admin mode Password for WEB_USERNAME (empty string = Disable)
+#define FRIENDLY_NAME          "Tasmota"         // [FriendlyName] Friendlyname up to 32 characters used by webpages and Alexa
+#define EMULATION              EMUL_NONE         // [Emulation] Select Belkin WeMo (single relay/light) or Hue Bridge emulation (multi relay/light) (EMUL_NONE, EMUL_WEMO or EMUL_HUE)
+#define EMULATION_HUE_1ST_GEN  false             // [Emulation] Force SetOption109 1 - if you only have Echo Dot 2nd gen devices
+#define CORS_DOMAIN            ""                // [Cors] CORS Domain for preflight requests
+>>>>>>> v8.5.1
 
 // -- HTTP Options --------------------------------
 #define GUI_SHOW_HOSTNAME false // [SetOption53] Show hostname and IP address in GUI main menu
@@ -273,7 +343,14 @@
 #define APP_DISABLE_POWERCYCLE false // [SetOption65] Disable fast power cycle detection for device reset
 #define DEEPSLEEP_BOOTCOUNT false    // [SetOption76] Enable incrementing bootcount when deepsleep is enabled
 
+#define APP_INTERLOCK_MODE     false             // [Interlock] Relay interlock mode
+#define APP_INTERLOCK_GROUP_1  0xFF              // [Interlock] Relay bitmask for interlock group 1 (0xFF if undef)
+//#define APP_INTERLOCK_GROUP_2  0x00              // [Interlock] Relay bitmask for interlock group 2 (0x00 if undef)
+//#define APP_INTERLOCK_GROUP_3  0x00              // [Interlock] Relay bitmask for interlock group 3 (0x00 if undef)
+//#define APP_INTERLOCK_GROUP_4  0x00              // [Interlock] Relay bitmask for interlock group 4 (0x00 if undef)
+
 // -- Lights --------------------------------------
+<<<<<<< HEAD
 #define WS2812_LEDS 30              // [Pixels] Number of WS2812 LEDs to start with (max is 512)
 #define LIGHT_MODE true             // [SetOption15] Switch between commands PWM or COLOR/DIMMER/CT/CHANNEL
 #define LIGHT_CLOCK_DIRECTION false // [SetOption16] Switch WS2812 clock between clockwise or counter-clockwise
@@ -284,6 +361,21 @@
 #define LIGHT_SLIDER_POWER false    // [SetOption77] Do not power off if slider moved to far left
 #define LIGHT_ALEXA_CT_RANGE false  // [SetOption82] Reduced CT range for Alexa
 #define LIGHT_PWM_CT_MODE false     // [SetOption92] Set PWM Mode from regular PWM to ColorTemp control (Xiaomi Philips ...) a.k.a. module 48 mode
+=======
+#define WS2812_LEDS            30                // [Pixels] Number of WS2812 LEDs to start with (max is 512)
+#define LIGHT_MODE             true              // [SetOption15] Switch between commands PWM or COLOR/DIMMER/CT/CHANNEL
+#define LIGHT_CLOCK_DIRECTION  false             // [SetOption16] Switch WS2812 clock between clockwise or counter-clockwise
+#define LIGHT_COLOR_RADIX      false             // [SetOption17] Switch between decimal or hexadecimal color output (false = hexadecimal, true = decimal)
+#define LIGHT_PAIRS_CO2        false             // [SetOption18] Enable Pair light signal with CO2 sensor
+#define LIGHT_POWER_CONTROL    false             // [SetOption20] Enable power control in relation to Dimmer/Color/Ct changes
+#define LIGHT_CHANNEL_MODE     false             // [SetOption68] Enable multi-channels PWM instead of Color PWM
+#define LIGHT_SLIDER_POWER     false             // [SetOption77] Do not power off if slider moved to far left
+#define LIGHT_ALEXA_CT_RANGE   false             // [SetOption82] Reduced CT range for Alexa
+#define LIGHT_PWM_CT_MODE      false             // [SetOption92] Set PWM Mode from regular PWM to ColorTemp control (Xiaomi Philips ...) a.k.a. module 48 mode
+#define LIGHT_WHITE_BLEND_MODE false             // [SetOption105] White Blend Mode - used to be `RGBWWTable` last value `0`, now deprecated in favor of this option
+#define LIGHT_VIRTUAL_CT       false             // [SetOption106] Virtual CT - Creates a virtual White ColorTemp for RGBW lights
+#define LIGHT_VIRTUAL_CT_CW    false             // [SetOption107] Virtual CT Channel - signals whether the hardware white is cold CW (true) or warm WW (false)
+>>>>>>> v8.5.1
 
 // -- Energy --------------------------------------
 #define ENERGY_VOLTAGE_ALWAYS false  // [SetOption21] Enable show voltage even if powered off
@@ -291,6 +383,7 @@
 #define ENERGY_HARDWARE_TOTALS false // [SetOption72] Enable hardware energy total counter as reference (#6561)
 
 // -- Other Options -------------------------------
+<<<<<<< HEAD
 #define TIMERS_ENABLED false        // [Timers] Enable Timers
 #define RF_DATA_RADIX false         // [SetOption28] RF receive data format (false = hexadecimal, true = decimal)
 #define IR_DATA_RADIX false         // [SetOption29] IR receive data format (false = hexadecimal, true = decimal)
@@ -302,6 +395,21 @@
 #define SHUTTER_SUPPORT false       // [SetOption80] Enable shutter support
 #define PCF8574_INVERT_PORTS false  // [SetOption81] Invert all ports on PCF8574 devices
 #define ZIGBEE_FRIENDLY_NAMES false // [SetOption83] Enable Zigbee FriendlyNames instead of ShortAddresses when possible
+=======
+#define TIMERS_ENABLED         false             // [Timers] Enable Timers
+#define RF_DATA_RADIX          false             // [SetOption28] RF receive data format (false = hexadecimal, true = decimal)
+#define IR_DATA_RADIX          false             // [SetOption29] IR receive data format (false = hexadecimal, true = decimal)
+#define TUYA_SETOPTION_20      false             // [SetOption54] Apply SetOption20 settings to Tuya device
+#define IR_ADD_RAW_DATA        false             // [SetOption58] Add IR Raw data to JSON message
+#define BUZZER_ENABLE          false             // [SetOption67] Enable buzzer when available
+#define DS18X20_PULL_UP        false             // [SetOption74] Enable internal pullup for single DS18x20 sensor
+#define COUNTER_RESET          false             // [SetOption79] Enable resetting of counters after telemetry was sent
+#define SHUTTER_SUPPORT        false             // [SetOption80] Enable shutter support
+#define PCF8574_INVERT_PORTS   false             // [SetOption81] Invert all ports on PCF8574 devices
+#define ZIGBEE_FRIENDLY_NAMES  false             // [SetOption83] Enable Zigbee FriendlyNames instead of ShortAddresses when possible
+#define ZIGBEE_RMV_ZBRECEIVED  false             // [SetOption100] Remove ZbReceived form JSON message
+#define ZIGBEE_INDEX_EP        false             // [SetOption101] Add the source endpoint as suffix to attributes, ex `Power3` instead of `Power` if sent from endpoint 3
+>>>>>>> v8.5.1
 
 /*********************************************************************************************\
  * END OF SECTION 1
@@ -344,8 +452,16 @@
 //#define USE_ARDUINO_OTA                          // Add optional support for Arduino OTA (+13k code)
 
 // -- MQTT ----------------------------------------
+<<<<<<< HEAD
 #define MQTT_TELE_RETAIN 0   // Tele messages may send retain flag (0 = off, 1 = on)
 #define MQTT_CLEAN_SESSION 1 // Mqtt clean session connection (0 = No clean session, 1 = Clean session (default))
+=======
+#define MQTT_LWT_OFFLINE       "Offline"         // MQTT LWT offline topic message
+#define MQTT_LWT_ONLINE        "Online"          // MQTT LWT online topic message
+
+#define MQTT_TELE_RETAIN       0                 // Tele messages may send retain flag (0 = off, 1 = on)
+#define MQTT_CLEAN_SESSION     1                 // Mqtt clean session connection (0 = No clean session, 1 = Clean session (default))
+>>>>>>> v8.5.1
 
 // -- MQTT - Domoticz -----------------------------
 // #define USE_DOMOTICZ                      // Enable Domoticz (+6k code, +0.3k mem)
@@ -353,8 +469,15 @@
 // #define DOMOTICZ_OUT_TOPIC "domoticz/out" // Domoticz Output Topic
 
 // -- MQTT - Home Assistant Discovery -------------
+<<<<<<< HEAD
 // #define USE_HOME_ASSISTANT                              // Enable Home Assistant Discovery Support (+4.1k code, +6 bytes mem)
 // #define HOME_ASSISTANT_DISCOVERY_PREFIX "homeassistant" // Home Assistant discovery prefix
+=======
+#define USE_HOME_ASSISTANT                                   // Enable Home Assistant Discovery Support (+4.1k code, +6 bytes mem)
+  #define HOME_ASSISTANT_DISCOVERY_PREFIX   "homeassistant"  // Home Assistant discovery prefix
+  #define HOME_ASSISTANT_LWT_TOPIC   "homeassistant/status"  // home Assistant Birth and Last Will Topic (default = homeassistant/status)
+  #define HOME_ASSISTANT_LWT_SUBSCRIBE    true               // Subscribe to Home Assistant Birth and Last Will Topic (default = true)
+>>>>>>> v8.5.1
 
 // -- MQTT - TLS - AWS IoT ------------------------
 // Using TLS starting with version v6.5.0.16 compilation will only work using Core 2.4.2 and 2.5.2. No longer supported: 2.3.0
@@ -362,10 +485,22 @@
 #define USE_MQTT_TLS_CA_CERT // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
 // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
 //  #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
+<<<<<<< HEAD
 //  #define USE_MQTT_AWS_IOT                       // Enable MQTT for AWS IoT - requires a private key (+11.9k code, +0.4k mem)
 //   Note: you need to generate a private key + certificate per device and update 'tasmota/tasmota_aws_iot.cpp'
 //   Full documentation here: https://github.com/arendst/Tasmota/wiki/AWS-IoT
+=======
+//  #define USE_MQTT_AWS_IOT_LIGHT                 // Enable MQTT for AWS IoT in light mode, with user/password instead of private certificate
+//  #define USE_MQTT_AWS_IOT                       // [Deprecated] Enable MQTT for AWS IoT - requires a private key (+11.9k code, +0.4k mem)
+                                                 //   Note: you need to generate a private key + certificate per device and update 'tasmota/tasmota_aws_iot.cpp'
+                                                 //   Full documentation here: https://github.com/arendst/Tasmota/wiki/AWS-IoT
+>>>>>>> v8.5.1
 //  #define USE_4K_RSA                             // Support 4096 bits certificates, instead of 2048
+
+// -- Telegram Protocol ---------------------------
+//#define USE_TELEGRAM                             // Support for Telegram protocol (+49k code, +7.0k mem and +4.8k additional during connection handshake)
+  #define USE_TELEGRAM_FINGERPRINT "\xB2\x72\x47\xA6\x69\x8C\x3C\x69\xF9\x58\x6C\xF3\x60\x02\xFB\x83\xFA\x8B\x1F\x23" // Telegram api.telegram.org TLS public key fingerpring
+//  #define USE_MQTT_TLS_CA_CERT                   // Use certificate instead of fingerprint
 
 // -- KNX IP Protocol -----------------------------
 //#define USE_KNX                                  // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
@@ -394,24 +529,42 @@
 // -- Ping ----------------------------------------
 //  #define USE_PING                                 // Enable Ping command (+2k code)
 
+// -- Compression ---------------------------------
+#define USE_UNISHOX_COMPRESSION                  // Add support for string compression in Rules or Scripts
+
 // -- Rules or Script  ----------------------------
 // Select none or only one of the below defines USE_RULES or USE_SCRIPT
+<<<<<<< HEAD
 #define USE_RULES             // Add support for rules (+8k code)
 #define USE_RULES_COMPRESSION // Compresses rules in Flash at about ~50% (+3.3k code)
+=======
+#define USE_RULES                                // Add support for rules (+8k code)
+//  #define USE_EXPRESSION                         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)
+//    #define SUPPORT_IF_STATEMENT                 // Add support for IF statement in rules (+4k2 code, -332 bytes mem)
+
+>>>>>>> v8.5.1
 //#define USE_SCRIPT                               // Add support for script (+17k code)
 //#define USE_SCRIPT_FATFS 4                     // Script: Add FAT FileSystem Support
 
-//  #define USE_EXPRESSION                         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)
-//    #define SUPPORT_IF_STATEMENT                 // Add support for IF statement in rules (+4k2 code, -332 bytes mem)
 //  #define SUPPORT_MQTT_EVENT                     // Support trigger event with MQTT subscriptions (+3k5 code)
 
 // -- Optional modules ----------------------------
+<<<<<<< HEAD
 //#define ROTARY_V1                                // Add support for MI Desk Lamp
 #define USE_SONOFF_RF    // Add support for Sonoff Rf Bridge (+3k2 code)
 #define USE_RF_FLASH     // Add support for flashing the EFM8BB1 chip on the Sonoff RF Bridge. C2CK must be connected to GPIO4, C2D to GPIO5 on the PCB (+2k7 code)
 #define USE_SONOFF_SC    // Add support for Sonoff Sc (+1k1 code)
 #define USE_TUYA_MCU     // Add support for Tuya Serial MCU
 #define TUYA_DIMMER_ID 0 // Default dimmer Id
+=======
+#define ROTARY_V1                                // Add support for Rotary Encoder as used in MI Desk Lamp (+0k8 code)
+  #define ROTARY_MAX_STEPS     10                // Rotary step boundary
+#define USE_SONOFF_RF                            // Add support for Sonoff Rf Bridge (+3k2 code)
+  #define USE_RF_FLASH                           // Add support for flashing the EFM8BB1 chip on the Sonoff RF Bridge. C2CK must be connected to GPIO4, C2D to GPIO5 on the PCB (+2k7 code)
+#define USE_SONOFF_SC                            // Add support for Sonoff Sc (+1k1 code)
+#define USE_TUYA_MCU                             // Add support for Tuya Serial MCU
+  #define TUYA_DIMMER_ID       0                 // Default dimmer Id
+>>>>>>> v8.5.1
 //  #define USE_TUYA_TIME                          // Add support for Set Time in Tuya MCU
 #define USE_ARMTRONIX_DIMMERS // Add support for Armtronix Dimmers (+1k4 code)
 #define USE_PS_16_DZ          // Add support for PS-16-DZ Dimmer (+2k code)
@@ -465,6 +618,7 @@
 //    #define USE_BME680                           // Enable support for BME680 sensor using Bosch BME680 library (+4k code)
 //  #define USE_BH1750                             // [I2cDriver11] Enable BH1750 sensor (I2C address 0x23 or 0x5C) (+0k5 code)
 //  #define USE_VEML6070                           // [I2cDriver12] Enable VEML6070 sensor (I2C addresses 0x38 and 0x39) (+1k5 code)
+<<<<<<< HEAD
 #define USE_VEML6070_RSET 270000 // VEML6070, Rset in Ohm used on PCB board, default 270K = 270000ohm, range for this sensor: 220K ... 1Meg
 #define USE_VEML6070_SHOW_RAW    // VEML6070, shows the raw value of UV-A                                                                                                                                                                         \
                                  //  #define USE_ADS1115                            // [I2cDriver13] Enable ADS1115 16 bit A/D converter (I2C address 0x48, 0x49, 0x4A or 0x4B) based on Adafruit ADS1x15 library (no library needed) (+0k7 code) \
@@ -532,6 +686,89 @@
 #define MTX_ADDRESS8 0x00      // [DisplayAddress8] I2C address of eigth 8x8 matrix module
 #define USE_DISPLAY_SEVENSEG   // [DisplayModel 11] [I2cDriver47] Enable sevenseg display (I2C 0x70-0x77) (<+11k code)
 #define SEVENSEG_ADDRESS1 0x70 // [DisplayAddress1] I2C address of first sevenseg matrix module
+=======
+    #define USE_VEML6070_RSET    270000          // VEML6070, Rset in Ohm used on PCB board, default 270K = 270000ohm, range for this sensor: 220K ... 1Meg
+    #define USE_VEML6070_SHOW_RAW                // VEML6070, shows the raw value of UV-A
+//  #define USE_ADS1115                            // [I2cDriver13] Enable ADS1115 16 bit A/D converter (I2C address 0x48, 0x49, 0x4A or 0x4B) based on Adafruit ADS1x15 library (no library needed) (+0k7 code)
+//  #define USE_INA219                             // [I2cDriver14] Enable INA219 (I2C address 0x40, 0x41 0x44 or 0x45) Low voltage and current sensor (+1k code)
+//  #define USE_INA226                             // [I2cDriver35] Enable INA226 (I2C address 0x40, 0x41 0x44 or 0x45) Low voltage and current sensor (+2k3 code)
+//  #define USE_SHT3X                              // [I2cDriver15] Enable SHT3x (I2C address 0x44 or 0x45) or SHTC3 (I2C address 0x70) sensor (+0k7 code)
+//  #define USE_TSL2561                            // [I2cDriver16] Enable TSL2561 sensor (I2C address 0x29, 0x39 or 0x49) using library Joba_Tsl2561 (+2k3 code)
+//  #define USE_TSL2591                            // [I2cDriver40] Enable TSL2591 sensor (I2C address 0x29) using library Adafruit_TSL2591 (+1k6 code)
+//  #define USE_MGS                                // [I2cDriver17] Enable Xadow and Grove Mutichannel Gas sensor using library Multichannel_Gas_Sensor (+10k code)
+    #define MGS_SENSOR_ADDR    0x04              // Default Mutichannel Gas sensor i2c address
+//  #define USE_SGP30                              // [I2cDriver18] Enable SGP30 sensor (I2C address 0x58) (+1k1 code)
+//  #define USE_SI1145                             // [I2cDriver19] Enable SI1145/46/47 sensor (I2C address 0x60) (+1k code)
+//  #define USE_LM75AD                             // [I2cDriver20] Enable LM75AD sensor (I2C addresses 0x48 - 0x4F) (+0k5 code)
+//  #define USE_APDS9960                           // [I2cDriver21] Enable APDS9960 Proximity Sensor (I2C address 0x39). Disables SHT and VEML6070 (+4k7 code)
+    #define USE_APDS9960_GESTURE                   // Enable APDS9960 Gesture feature (+2k code)
+    #define USE_APDS9960_PROXIMITY                 // Enable APDS9960 Proximity feature (>50 code)
+    #define USE_APDS9960_COLOR                     // Enable APDS9960 Color feature (+0.8k code)
+    #define USE_APDS9960_STARTMODE  0              // Default to enable Gesture mode
+//  #define USE_MCP230xx                           // [I2cDriver22] Enable MCP23008/MCP23017 - Must define I2C Address in #define USE_MCP230xx_ADDR below - range 0x20 - 0x27 (+4k7 code)
+//    #define USE_MCP230xx_ADDR 0x20               // Enable MCP23008/MCP23017 I2C Address to use (Must be within range 0x20 through 0x26 - set according to your wired setup)
+//    #define USE_MCP230xx_OUTPUT                  // Enable MCP23008/MCP23017 OUTPUT support through sensor29 commands (+1k5 code)
+//    #define USE_MCP230xx_DISPLAYOUTPUT           // Enable MCP23008/MCP23017 to display state of OUTPUT pins on Web UI (+0k2 code)
+//  #define USE_PCA9685                            // [I2cDriver1] Enable PCA9685 I2C HW PWM Driver - Must define I2C Address in #define USE_PCA9685_ADDR below - range 0x40 - 0x47 (+1k4 code)
+//    #define USE_PCA9685_ADDR 0x40                // Enable PCA9685 I2C Address to use (Must be within range 0x40 through 0x47 - set according to your wired setup)
+//    #define USE_PCA9685_FREQ 50                  // Define default PWM frequency in Hz to be used (must be within 24 to 1526) - If other value is used, it will rever to 50Hz
+//  #define USE_MPR121                             // [I2cDriver23] Enable MPR121 controller (I2C addresses 0x5A, 0x5B, 0x5C and 0x5D) in input mode for touch buttons (+1k3 code)
+//  #define USE_CCS811                             // [I2cDriver24] Enable CCS811 sensor (I2C address 0x5A) (+2k2 code)
+//  #define USE_MPU6050                            // [I2cDriver25] Enable MPU6050 sensor (I2C address 0x68 AD0 low or 0x69 AD0 high) (+3K3 of code and 188 Bytes of RAM)
+//    #define USE_MPU6050_DMP                      // Enable in MPU6050 to use the DMP on the chip, should create better results (+8k6 of code)
+//  #define USE_DS3231                             // [I2cDriver26] Enable DS3231 external RTC in case no Wifi is avaliable. See docs in the source file (+1k2 code)
+//    #define USE_RTC_ADDR  0x68                   // Default I2C address 0x68
+//  #define USE_MGC3130                            // [I2cDriver27] Enable MGC3130 Electric Field Effect Sensor (I2C address 0x42) (+2k7 code, 0k3 mem)
+//  #define USE_MAX44009                           // [I2cDriver28] Enable MAX44009 Ambient Light sensor (I2C addresses 0x4A and 0x4B) (+0k8 code)
+//  #define USE_SCD30                              // [I2cDriver29] Enable Sensiron SCd30 CO2 sensor (I2C address 0x61) (+3k3 code)
+//  #define USE_SPS30                              // [I2cDriver30] Enable Sensiron SPS30 particle sensor (I2C address 0x69) (+1.7 code)
+  #define USE_ADE7953                            // [I2cDriver7] Enable ADE7953 Energy monitor as used on Shelly 2.5 (I2C address 0x38) (+1k5)
+//  #define USE_VL53L0X                            // [I2cDriver31] Enable VL53L0x time of flight sensor (I2C address 0x29) (+4k code)
+//  #define USE_VL53L1X                            // [I2cDriver54] Enable support for VL53L1X sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
+//  #define USE_MLX90614                           // [I2cDriver32] Enable MLX90614 ir temp sensor (I2C address 0x5a) (+0.6k code)
+//  #define USE_CHIRP                              // [I2cDriver33] Enable CHIRP soil moisture sensor (variable I2C address, default 0x20)
+//  #define USE_PAJ7620                            // [I2cDriver34] Enable PAJ7620 gesture sensor (I2C address 0x73) (+2.5k code)
+//  #define USE_PCF8574                            // [I2cDriver2] Enable PCF8574 I/O Expander (I2C addresses 0x20 - 0x26 and 0x39 - 0x3F) (+1k9 code)
+//  #define USE_HIH6                               // [I2cDriver36] Enable Honeywell HIH Humidity and Temperature sensor (I2C address 0x27) (+0k6)
+//  #define USE_DHT12                              // [I2cDriver41] Enable DHT12 humidity and temperature sensor (I2C address 0x5C) (+0k7 code)
+//  #define USE_DS1624                             // [I2cDriver42] Enable DS1624, DS1621 temperature sensor (I2C addresses 0x48 - 0x4F) (+1k2 code)
+//  #define USE_AHT1x                              // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38, 0x39) (+0k8 code)
+//    #define USE_AHT2x                              // [I2cDriver43] Enable AHT20 instead of AHT1x humidity and temperature sensor (I2C address 0x38) (+0k8 code)
+//  #define USE_WEMOS_MOTOR_V1                     // [I2cDriver44] Enable Wemos motor driver V1 (I2C addresses 0x2D - 0x30) (+0k7 code)
+//    #define WEMOS_MOTOR_V1_ADDR  0x30            // Default I2C address 0x30
+//    #define WEMOS_MOTOR_V1_FREQ  1000            // Default frequency
+//  #define USE_HDC1080                            // [I2cDriver45] Enable HDC1080 temperature/humidity sensor (I2C address 0x40) (+1k5 code)
+//  #define USE_IAQ                                // [I2cDriver46] Enable iAQ-core air quality sensor (I2C address 0x5a) (+0k6 code)
+//  #define USE_AS3935                             // [I2cDriver48] Enable AS3935 Franklin Lightning Sensor (I2C address 0x03) (+5k4 code)
+//  #define USE_VEML6075                           // [I2cDriver49] Enable VEML6075 UVA/UVB/UVINDEX Sensor (I2C address 0x10) (+2k1 code)
+//  #define USE_VEML7700                           // [I2cDriver50] Enable VEML7700 Ambient Light sensor (I2C addresses 0x10) (+4k5 code)
+//  #define USE_MCP9808                            // [I2cDriver51] Enable MCP9808 temperature sensor (I2C addresses 0x18 - 0x1F) (+0k9 code)
+//  #define USE_HP303B                             // [I2cDriver52] Enable HP303B temperature and pressure sensor (I2C address 0x76 or 0x77) (+6k2 code)
+//  #define USE_MLX90640                           // [I2cDriver53] Enable MLX90640 IR array temperature sensor (I2C address 0x33) (+20k code)
+
+//  #define USE_DISPLAY                            // Add I2C Display Support (+2k code)
+    #define USE_DISPLAY_MODES1TO5                // Enable display mode 1 to 5 in addition to mode 0
+    #define USE_DISPLAY_LCD                      // [DisplayModel 1] [I2cDriver3] Enable Lcd display (I2C addresses 0x27 and 0x3F) (+6k code)
+    #define USE_DISPLAY_SSD1306                  // [DisplayModel 2] [I2cDriver4] Enable SSD1306 Oled 128x64 display (I2C addresses 0x3C and 0x3D) (+16k code)
+    #define USE_DISPLAY_MATRIX                   // [DisplayModel 3] [I2cDriver5] Enable 8x8 Matrix display (I2C adresseses see below) (+11k code)
+      #define MTX_ADDRESS1     0x71              // [DisplayAddress1] I2C address of first 8x8 matrix module
+      #define MTX_ADDRESS2     0x74              // [DisplayAddress2] I2C address of second 8x8 matrix module
+      #define MTX_ADDRESS3     0x75              // [DisplayAddress3] I2C address of third 8x8 matrix module
+      #define MTX_ADDRESS4     0x72              // [DisplayAddress4] I2C address of fourth 8x8 matrix module
+      #define MTX_ADDRESS5     0x73              // [DisplayAddress5] I2C address of fifth 8x8 matrix module
+      #define MTX_ADDRESS6     0x76              // [DisplayAddress6] I2C address of sixth 8x8 matrix module
+      #define MTX_ADDRESS7     0x00              // [DisplayAddress7] I2C address of seventh 8x8 matrix module
+      #define MTX_ADDRESS8     0x00              // [DisplayAddress8] I2C address of eigth 8x8 matrix module
+    #define USE_DISPLAY_SEVENSEG                 // [DisplayModel 11] [I2cDriver47] Enable sevenseg display (I2C 0x70-0x77) (<+11k code)
+                                                 // Multiple sevenseg displays are logically arranged vertically with MTX_ADDRESS1 at y=0,
+                                                 // MTX_ADDRESS2 at y=1, up to MTX_ADDRESS8 at y=7
+                                                 // Command: DisplayText [yn]8888
+                                                 // will display 8888 at sevenseg display at I2C address MTX_ADDRESS(n-1)
+                                                 // Each segment may be address Command: DisplayText [xn]m
+                                                 //  where n is 0..4 (4 digits and middle :) and m is decimal for bitmap of which segment to turn on.
+                                                 // Reference: https://cdn-learn.adafruit.com/downloads/pdf/adafruit-led-backpack.pdf
+    // #define SEVENSEG_ADDRESS1     0x70      // No longer used.  Use MTX_ADDRESS1 - MTX_ADDRESS8 instead to specify I2C address of sevenseg displays
+>>>>>>> v8.5.1
 //    #define USE_DISPLAY_SH1106                   // [DisplayModel 7] [I2cDriver6] Enable SH1106 Oled 128x64 display (I2C addresses 0x3C and 0x3D)
 #endif // USE_I2C
 
@@ -564,6 +801,7 @@
 //#define USE_NOVA_SDS                             // Add support for SDS011 and SDS021 particle concentration sensor (+1k5 code)
 #define STARTING_OFFSET 30 // Turn on NovaSDS XX-seconds before tele_period is reached
 //#define USE_HPMA                                 // Add support for Honeywell HPMA115S0 particle concentration sensor (+1k4)
+<<<<<<< HEAD
 #define USE_SERIAL_BRIDGE                    // Add support for software Serial Bridge (+0k8 code) \
                                              //#define USE_MP3_PLAYER                           // Use of the DFPlayer Mini MP3 Player RB-DFR-562 commands: play, volume and stop
 #define MP3_VOLUME 10                        // Set the startup volume on init, the range can be 0..30(max)                                                                                          \
@@ -605,16 +843,75 @@
                                     //#define USE_LE01MR                               // Add support for F&F LE-01MR Modbus energy monitor (+1k code)
 #define LE01MR_SPEED 9600           // LE-01MR modbus baudrate (default: 9600)
 #define LE01MR_ADDR 1               // LE-01MR modbus address (default: 0x01)
+=======
+//#define USE_SR04                                 // Add support for HC-SR04 ultrasonic devices (+1k code)
+//#define USE_DYP                                  // Add support for DYP ME-007 ultrasonic distance sensor, serial port version (+0k5 code)
+#define USE_SERIAL_BRIDGE                        // Add support for software Serial Bridge (+0k8 code)
+//#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
+//#define USE_MP3_PLAYER                           // Use of the DFPlayer Mini MP3 Player RB-DFR-562 commands: play, volume and stop
+  #define MP3_VOLUME           10                // Set the startup volume on init, the range can be 0..30(max)
+//#define USE_AZ7798                               // Add support for AZ-Instrument 7798 CO2 datalogger (+1k6 code)
+//#define USE_PN532_HSU                            // Add support for PN532 using HSU (Serial) interface (+1k8 code, 140 bytes mem)
+//  #define USE_PN532_CAUSE_EVENTS                 // Cause event execution for PN532_UID= and PN532_DATA=[if defined] (+ 30 bytes code)
+//  #define USE_PN532_DATA_FUNCTION                // Add sensor40 command support for erase, setting data block content (+1k7 code, 388 bytes mem)
+//  #define USE_PN532_DATA_RAW                     // Allow DATA block to be used by non-alpha-numberic data (+ 80 bytes code, 48 bytes ram)
+//#define USE_RDM6300                              // Add support for RDM6300 125kHz RFID Reader (+0k8)
+//#define USE_IBEACON                              // Add support for bluetooth LE passive scan of ibeacon devices (uses HM17 module)
+//#define USE_GPS                                  // Add support for GPS and NTP Server for becoming Stratus 1 Time Source (+3k1 code, +132 bytes RAM)
+//  #define USE_FLOG                               // Add support for GPS logging in OTA's Flash (Experimental) (+2k9 code, +8 bytes RAM)
+//#define USE_HM10                                 // (ESP8266 only) Add support for HM-10 as a BLE-bridge (+9k3 code)
+//#define USE_HRXL                                 // Add support for MaxBotix HRXL-MaxSonar ultrasonic range finders (+0k7)
+//#define USE_TASMOTA_CLIENT                       // Add support for Arduino Uno/Pro Mini via serial interface including flashing (+2k6 code, 64 mem)
+  #define USE_TASMOTA_CLIENT_FLASH_SPEED 57600   // Usually 57600 for 3.3V variants and 115200 for 5V variants
+  #define USE_TASMOTA_CLIENT_SERIAL_SPEED 57600  // Depends on the sketch that is running on the Uno/Pro Mini
+//#define USE_OPENTHERM                            // Add support for OpenTherm (+15k code)
+
+// -- Power monitoring sensors --------------------
+#define USE_ENERGY_MARGIN_DETECTION              // Add support for Energy Margin detection (+1k6 code)
+  #define USE_ENERGY_POWER_LIMIT                 // Add additional support for Energy Power Limit detection (+1k2 code)
+#define USE_PZEM004T                             // Add support for PZEM004T Energy monitor (+2k code)
+#define USE_PZEM_AC                              // Add support for PZEM014,016 Energy monitor (+1k1 code)
+#define USE_PZEM_DC                              // Add support for PZEM003,017 Energy monitor (+1k1 code)
+#define USE_MCP39F501                            // Add support for MCP39F501 Energy monitor as used in Shelly 2 (+3k1 code)
+//#define USE_SDM120                               // Add support for Eastron SDM120-Modbus energy monitor (+1k1 code)
+  #define SDM120_SPEED         2400              // SDM120-Modbus RS485 serial speed (default: 2400 baud)
+//#define USE_SDM630                               // Add support for Eastron SDM630-Modbus energy monitor (+0k6 code)
+  #define SDM630_SPEED         9600              // SDM630-Modbus RS485 serial speed (default: 9600 baud)
+//#define USE_DDS2382                              // Add support for Hiking DDS2382 Modbus energy monitor (+0k6 code)
+  #define DDS2382_SPEED        9600              // Hiking DDS2382 Modbus RS485 serial speed (default: 9600 baud)
+//#define USE_DDSU666                              // Add support for Chint DDSU666 Modbus energy monitor (+0k6 code)
+  #define DDSU666_SPEED        9600              // Chint DDSU666 Modbus RS485 serial speed (default: 9600 baud)
+//#define USE_SOLAX_X1                             // Add support for Solax X1 series Modbus log info (+3k1 code)
+  #define SOLAXX1_SPEED        9600              // Solax X1 Modbus RS485 serial speed (default: 9600 baud)
+  #define SOLAXX1_PV2                            // Solax X1 using second PV
+//#define USE_LE01MR                               // Add support for F&F LE-01MR Modbus energy monitor (+1k code)
+  #define LE01MR_SPEED         9600              // LE-01MR modbus baudrate (default: 9600)
+  #define LE01MR_ADDR          1                 // LE-01MR modbus address (default: 0x01)
+#define USE_BL0940                               // Add support for BL0940 Energy monitor as used in Blitzwolf SHP-10 (+1k6 code)
+//#define USE_TELEINFO                             // Add support for Teleinfo via serial RX interface (+5k2 code, +168 RAM + SmartMeter LinkedList Values RAM)
+//  #define USE_TELEINFO_STANDARD                  // Use standard mode (9600 bps) else it's historical mode (1200 bps)
+//#define USE_IEM3000                              // Add support for Schneider Electric iEM3000-Modbus series energy monitor (+0k8 code)
+  #define IEM3000_SPEED          19200           // iEM3000-Modbus RS485 serial speed (default: 19200 baud)
+  #define IEM3000_ADDR           1               // iEM3000-Modbus modbus address (default: 0x01)
+>>>>>>> v8.5.1
 
 // -- Low level interface devices -----------------
 #define USE_DHT // Add support for DHT11, AM2301 (DHT21, DHT22, AM2302, AM2321) and SI7021 Temperature and Humidity sensor (1k6 code)
 
-//#define USE_MAX31855                             // Add support for MAX31855 K-Type thermocouple sensor using softSPI
+//#define USE_MAX31855                             // Add support for MAX31855/MAX6675 K-Type thermocouple sensor using softSPI
 //#define USE_MAX31865                             // Add support for MAX31865 RTD sensors using softSPI
+<<<<<<< HEAD
 #define MAX31865_PTD_WIRES 2 // PTDs come in several flavors. Pick yours
 #define MAX31865_PTD_RES 100 // Nominal PTD resistance at 0°C (100Ω for a PT100, 1000Ω for a PT1000, YMMV!)
 #define MAX31865_REF_RES 430 // Reference resistor (Usually 430Ω for a PT100, 4300Ω for a PT1000)
 #define MAX31865_PTD_BIAS 0  // To calibrate your not-so-good PTD
+=======
+  #define MAX31865_PTD_WIRES  2                  // PTDs come in several flavors. Pick yours
+  #define MAX31865_PTD_RES    100                // Nominal PTD resistance at 0°C (100Ω for a PT100, 1000Ω for a PT1000, YMMV!)
+  #define MAX31865_REF_RES    430                // Reference resistor (Usually 430Ω for a PT100, 4300Ω for a PT1000)
+  #define MAX31865_PTD_BIAS   0                  // To calibrate your not-so-good PTD
+//#define USE_LMT01                                // Add support for TI LMT01 temperature sensor, count pulses on single GPIO (+0k5 code)
+>>>>>>> v8.5.1
 
 // -- IR Remote features - all protocols from IRremoteESP8266 --------------------------
 // IR Full Protocols mode is activated through platform.io only.
@@ -639,6 +936,7 @@
 
 // -- Zigbee interface ----------------------------
 //#define USE_ZIGBEE                                // Enable serial communication with Zigbee CC2530 flashed with ZNP (+49k code, +3k mem)
+<<<<<<< HEAD
 #define USE_ZIGBEE_PANID 0x1A63                    // arbitrary PAN ID for Zigbee network, must be unique in the home                                   \
                                                    // if PANID == 0xFFFF, then the device will act as a Zigbee router, the parameters below are ignored \
                                                    // if PANID == 0xFFFE, then the device will act as a Zigbee end-device (non-router), the parameters below are ignored
@@ -648,10 +946,19 @@
 #define USE_ZIGBEE_PRECFGKEY_H 0x0D0C0A0806040200L // note: changing requires to re-pair all devices
 
 #define USE_ZIGBEE_COALESCE_ATTR_TIMER 350 // timer to coalesce attribute values (in ms)
+=======
+  #define USE_ZIGBEE_ZNP                         // Enable ZNP protocol, needed for CC2530 based devices
+//  #define USE_ZIGBEE_EZSP                        // Enable EZSP protocol, needed for EFR32 EmberZNet based devices, like Sonoff Zigbee bridge
+                                                 // Note: USE_ZIGBEE_ZNP and USE_ZIGBEE_EZSP are mutually incompatible, you must select exactly one
+  #define USE_ZIGBEE_CHANNEL  11                 // Zigbee Channel (11-26)
+  #define USE_ZIGBEE_TXRADIO_DBM  20             // Tx Radio power in dBm (only for EZSP, EFR32 can go up to 20 dBm)
+
+  #define USE_ZIGBEE_COALESCE_ATTR_TIMER 350     // timer to coalesce attribute values (in ms)
+  #define USE_ZIGBEE_MODELID      "Tasmota Z2T"  // reported "ModelId"      (cluster 0000 / attribute 0005)
+  #define USE_ZIGBEE_MANUFACTURER "Tasmota"      // reported "Manufacturer" (cluster 0000 / attribute 0004)
+>>>>>>> v8.5.1
 
 // -- Other sensors/drivers -----------------------
-
-//#define USE_SR04                                 // Add support for HC-SR04 ultrasonic devices (+1k code)
 
 //#define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
 //#define USE_HX711                                // Add support for HX711 load cell (+1k5 code)
@@ -705,7 +1012,34 @@
 #define THERMOSTAT_TEMP_BAND_NO_PEAK_DET 1     // Default temperature band in thenths of degrees celsius within no peak will be detected
 #define THERMOSTAT_TIME_STD_DEV_PEAK_DET_OK 10 // Default standard deviation in minutes of the oscillation periods within the peak detection is successful
 
+// -- Prometheus exporter ---------------------------
+//#define USE_PROMETHEUS                           // Add support for https://prometheus.io/ metrics exporting over HTTP /metrics endpoint
+
 // -- End of general directives -------------------
+
+/*********************************************************************************************\
+ * ESP32 only features
+\*********************************************************************************************/
+
+#ifdef ESP32
+
+//#define USE_ETHERNET                             // Add support for ethernet (Currently fixed for Olimex ESP32-PoE)
+  // Olimex ESP32-PoE
+  #define ETH_TYPE          0                    // [EthType] 0 = ETH_PHY_LAN8720, 1 = ETH_PHY_TLK110, 2 = ETH_PHY_IP101
+  #define ETH_ADDR          0                    // [EthAddress] 0 = PHY0 .. 31 = PHY31
+  #define ETH_CLKMODE       3                    // [EthClockMode] 0 = ETH_CLOCK_GPIO0_IN, 1 = ETH_CLOCK_GPIO0_OUT, 2 = ETH_CLOCK_GPIO16_OUT, 3 = ETH_CLOCK_GPIO17_OUT
+  // wESP32-PoE
+//  #define ETH_TYPE          0                    // [EthType] 0 = ETH_PHY_LAN8720, 1 = ETH_PHY_TLK110, 2 = ETH_PHY_IP101
+//  #define ETH_ADDR          0                    // [EthAddress] 0 = PHY0 .. 31 = PHY31
+//  #define ETH_CLKMODE       0                    // [EthClockMode] 0 = ETH_CLOCK_GPIO0_IN, 1 = ETH_CLOCK_GPIO0_OUT, 2 = ETH_CLOCK_GPIO16_OUT, 3 = ETH_CLOCK_GPIO17_OUT
+
+#define USE_ADC                                  // Add support for ADC on GPIO32 to GPIO39
+
+//#define USE_SPI                                  // Add support for hardware SPI
+//#define USE_MI_ESP32                             // Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+//#define USE_WEBCAM                               // Add support for webcam
+
+#endif
 
 /*********************************************************************************************\
  * Debug features
@@ -738,12 +1072,33 @@
 #include "user_config_override.h" // Configuration overrides for my_user_config.h
 #endif
 
+<<<<<<< HEAD
 #if defined(USE_DISCOVERY) && defined(USE_MQTT_AWS_IOT)
 #error "Select either USE_DISCOVERY or USE_MQTT_AWS_IOT, mDNS takes too much code space and is not needed for AWS IoT"
+=======
+#if defined(USE_DISCOVERY) && (defined(USE_MQTT_AWS_IOT) || defined(USE_MQTT_AWS_IOT_LIGHT))
+  #error "Select either USE_DISCOVERY or USE_MQTT_AWS_IOT, mDNS takes too much code space and is not needed for AWS IoT"
+>>>>>>> v8.5.1
 #endif
 
 #if defined(USE_RULES) && defined(USE_SCRIPT)
 #error "Select either USE_RULES or USE_SCRIPT. They can't both be used at the same time"
 #endif
 
+<<<<<<< HEAD
 #endif // _MY_USER_CONFIG_H_
+=======
+/*********************************************************************************************\
+ * Post-process compile options for TLS
+\*********************************************************************************************/
+
+#if defined(USE_MQTT_TLS) || defined(USE_SENDMAIL) || defined(USE_TELEGRAM)
+  #define USE_TLS                                  // flag indicates we need to include TLS code
+
+  #if defined(USE_MQTT_AWS_IOT) || defined(USE_TELEGRAM)
+    #define USE_MQTT_TLS_FORCE_EC_CIPHER           // AWS IoT and TELEGRAM require EC Cipher
+  #endif
+#endif
+
+#endif  // _MY_USER_CONFIG_H_
+>>>>>>> v8.5.1
