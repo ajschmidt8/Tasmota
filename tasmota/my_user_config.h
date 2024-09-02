@@ -516,12 +516,15 @@
 //  #define USER_RULE1 "<Any rule1 data>"          // Add rule1 data saved at initial firmware load or when command reset is executed
 //  #define USER_RULE2 "<Any rule2 data>"          // Add rule2 data saved at initial firmware load or when command reset is executed
 //  #define USER_RULE3 "<Any rule3 data>"          // Add rule3 data saved at initial firmware load or when command reset is executed
+ #define USER_RULE1 "Rule1 ON switch1#boot DO var1 %value% ENDON ON switch2#boot DO var2 %value% ENDON ON mqtt#connected DO BACKLOG event SetClosed=%var1%; event SetOpened=%var2% ENDON ON switch1#state DO event SetClosed=%value% ENDON ON switch2#state DO event SetOpened=%value% ENDON ON event#SetClosed DO publish2 ha/garage/closed %value% ENDON ON event#SetOpened DO publish2 ha/garage/opened %value% ENDON"           // Add rule1 data saved at initial firmware load or when command reset is executed
+
 
 //#define USE_SCRIPT                               // Add support for script (+36k code, +1k mem)
 //  #define USE_SCRIPT_FATFS 4                     // Script: Add FAT FileSystem Support
 //  #define SUPPORT_MQTT_EVENT                     // Support trigger event with MQTT subscriptions (+3k5 code)
 
 //#define USER_BACKLOG "<Any command separated by a semicolon (;)>"  // Add commands executed at firmware load or when command reset is executed
+#define USER_BACKLOG "Backlog Module 18; PowerOnState 0; Gpio4 160; Gpio5 161; Gpio12 256; PulseTime 7; SwitchMode1 2; SwitchMode2 2; SwitchTopic 0; Rule1 1; Gpio2 288; LedPower 1; LedState 7"
 
 // -- Optional modules ----------------------------
 // #define ROTARY_V1                                // Add support for Rotary Encoder as used in MI Desk Lamp (+0k8 code)
