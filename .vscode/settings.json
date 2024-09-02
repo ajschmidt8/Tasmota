@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSave": false,
     "platformio-ide.toolbar": [
       {
         "text": "$(home)",
