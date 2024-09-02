@@ -436,9 +436,9 @@
 #define MQTT_DISABLE_MODBUSRECEIVED  0           // [SetOption158] 1 = Disable ModbusReceived mqtt messages, 0 = Enable ModbusReceived mqtt messages (default)
 
 // -- MQTT - Domoticz -----------------------------
-#define USE_DOMOTICZ                             // Enable Domoticz (+6k code, +0.3k mem)
-  #define DOMOTICZ_IN_TOPIC    "domoticz/in"     // Domoticz Input Topic
-  #define DOMOTICZ_OUT_TOPIC   "domoticz/out"    // Domoticz Output Topic
+// #define USE_DOMOTICZ                             // Enable Domoticz (+6k code, +0.3k mem)
+//   #define DOMOTICZ_IN_TOPIC    "domoticz/in"     // Domoticz Input Topic
+//   #define DOMOTICZ_OUT_TOPIC   "domoticz/out"    // Domoticz Output Topic
 
 // -- MQTT - Home Assistant Discovery -------------
 //#define USE_HOME_ASSISTANT                                   // Enable Home Assistant Discovery Support (+12k code, +6 bytes mem)
@@ -473,7 +473,7 @@
 
 // -- KNX IP Protocol -----------------------------
 //#define USE_KNX                                  // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
-  #define USE_KNX_WEB_MENU                       // Enable KNX WEB MENU (+8.3k code, +144 mem)
+  // #define USE_KNX_WEB_MENU                       // Enable KNX WEB MENU (+8.3k code, +144 mem)
 
 // -- HTTP ----------------------------------------
 #define USE_WEBSERVER                            // Enable web server and Wi-Fi Manager (+66k code, +8k mem)
@@ -486,8 +486,8 @@
 //  #define USE_WEBRUN                             // Enable executing a tasmota command file from external web server (+0.4 code)
 //  #define USE_GPIO_VIEWER                        // Enable GPIO Viewer to see realtime GPIO states (+6k code)
 //    #define GV_SAMPLING_INTERVAL  100            // [GvSampling] milliseconds - Use Tasmota Scheduler (100) or Ticker (20..99,101..1000)
-  #define USE_EMULATION_HUE                      // Enable Hue Bridge emulation for Alexa (+14k code, +2k mem common)
-  #define USE_EMULATION_WEMO                     // Enable Belkin WeMo emulation for Alexa (+6k code, +2k mem common)
+  // #define USE_EMULATION_HUE                      // Enable Hue Bridge emulation for Alexa (+14k code, +2k mem common)
+  // #define USE_EMULATION_WEMO                     // Enable Belkin WeMo emulation for Alexa (+6k code, +2k mem common)
   // #define USE_CCLOADER                           // Enable CCLoader FW upgrade tool (for CC25xx devices)
 
 // -- mDNS ----------------------------------------
@@ -524,50 +524,50 @@
 //#define USER_BACKLOG "<Any command separated by a semicolon (;)>"  // Add commands executed at firmware load or when command reset is executed
 
 // -- Optional modules ----------------------------
-#define ROTARY_V1                                // Add support for Rotary Encoder as used in MI Desk Lamp (+0k8 code)
-  #define ROTARY_MAX_STEPS     10                // Rotary step boundary
-#define USE_SONOFF_RF                            // Add support for Sonoff Rf Bridge (+3k2 code)
-  #define USE_RF_FLASH                           // Add support for flashing the EFM8BB1 chip on the Sonoff RF Bridge. C2CK must be connected to GPIO4, C2D to GPIO5 on the PCB (+2k7 code)
-#define USE_SONOFF_SC                            // Add support for Sonoff Sc (+1k1 code)
-#define USE_TUYA_MCU                             // Add support for Tuya Serial MCU
-  #define TUYA_DIMMER_ID       0                 // Default dimmer Id
-  #define USE_TUYA_TIME                          // Add support for Set Time in Tuya MCU
+// #define ROTARY_V1                                // Add support for Rotary Encoder as used in MI Desk Lamp (+0k8 code)
+//   #define ROTARY_MAX_STEPS     10                // Rotary step boundary
+// #define USE_SONOFF_RF                            // Add support for Sonoff Rf Bridge (+3k2 code)
+//   #define USE_RF_FLASH                           // Add support for flashing the EFM8BB1 chip on the Sonoff RF Bridge. C2CK must be connected to GPIO4, C2D to GPIO5 on the PCB (+2k7 code)
+// #define USE_SONOFF_SC                            // Add support for Sonoff Sc (+1k1 code)
+// #define USE_TUYA_MCU                             // Add support for Tuya Serial MCU
+//   #define TUYA_DIMMER_ID       0                 // Default dimmer Id
+//   #define USE_TUYA_TIME                          // Add support for Set Time in Tuya MCU
 //#define USE_TUYAMCUBR                            // Add support for TuyaMCU Bridge
-#define USE_ARMTRONIX_DIMMERS                    // Add support for Armtronix Dimmers (+1k4 code)
-#define USE_PS_16_DZ                             // Add support for PS-16-DZ Dimmer (+2k code)
-#define USE_SONOFF_IFAN                          // Add support for Sonoff iFan02 and iFan03 (+2k code)
+// #define USE_ARMTRONIX_DIMMERS                    // Add support for Armtronix Dimmers (+1k4 code)
+// #define USE_PS_16_DZ                             // Add support for PS-16-DZ Dimmer (+2k code)
+// #define USE_SONOFF_IFAN                          // Add support for Sonoff iFan02 and iFan03 (+2k code)
 #define USE_BUZZER                               // Add support for a buzzer (+0k6 code)
 #define USE_ARILUX_RF                            // Add support for Arilux RF remote controller (+0k8 code, 252 iram (non 2.3.0))
-#define USE_SHUTTER                              // Add Shutter support for up to 4 shutter with different motortypes (+11k code)
+// #define USE_SHUTTER                              // Add Shutter support for up to 4 shutter with different motortypes (+11k code)
 #define USE_DEEPSLEEP                            // Add support for deepsleep (+1k code)
 #define USE_EXS_DIMMER                           // Add support for ES-Store Wi-Fi Dimmer (+1k5 code)
 //  #define EXS_MCU_CMNDS                          // Add command to send MCU commands (+0k8 code)
 //#define USE_HOTPLUG                              // Add support for sensor HotPlug
-#define USE_DEVICE_GROUPS                        // Add support for device groups (+5k5 code)
-  #define DEVICE_GROUPS_ADDRESS 239,255,250,250  // Device groups multicast address
-  #define DEVICE_GROUPS_PORT 4447                // Device groups multicast port
-  #define USE_DEVICE_GROUPS_SEND                 // Add support for the DevGroupSend command (+0k6 code)
-#define USE_PWM_DIMMER                           // Add support for MJ-SD01/acenx/NTONPOWER PWM dimmers (+2k3 code, DGR=0k7)
-  #define USE_PWM_DIMMER_REMOTE                  // Add support for remote switches to PWM Dimmer (requires USE_DEVICE_GROUPS) (+0k6 code)
+// #define USE_DEVICE_GROUPS                        // Add support for device groups (+5k5 code)
+//   #define DEVICE_GROUPS_ADDRESS 239,255,250,250  // Device groups multicast address
+//   #define DEVICE_GROUPS_PORT 4447                // Device groups multicast port
+//   #define USE_DEVICE_GROUPS_SEND                 // Add support for the DevGroupSend command (+0k6 code)
+// #define USE_PWM_DIMMER                           // Add support for MJ-SD01/acenx/NTONPOWER PWM dimmers (+2k3 code, DGR=0k7)
+//   #define USE_PWM_DIMMER_REMOTE                  // Add support for remote switches to PWM Dimmer (requires USE_DEVICE_GROUPS) (+0k6 code)
 //#define USE_KEELOQ                               // Add support for Jarolift rollers by Keeloq algorithm (+4k5 code)
-#define USE_SONOFF_D1                            // Add support for Sonoff D1 Dimmer (+0k7 code)
-#define USE_SHELLY_DIMMER                        // Add support for Shelly Dimmer (+3k code)
-  #define SHELLY_CMDS                            // Add command to send co-processor commands (+0k3 code)
-  #define SHELLY_FW_UPGRADE                      // Add firmware upgrade option for co-processor (+3k4 code)
+// #define USE_SONOFF_D1                            // Add support for Sonoff D1 Dimmer (+0k7 code)
+// #define USE_SHELLY_DIMMER                        // Add support for Shelly Dimmer (+3k code)
+//   #define SHELLY_CMDS                            // Add command to send co-processor commands (+0k3 code)
+//   #define SHELLY_FW_UPGRADE                      // Add firmware upgrade option for co-processor (+3k4 code)
 //  #define SHELLY_VOLTAGE_MON                     // Add support for reading voltage and current measurment (-0k0 code)
 //#define USE_MAGIC_SWITCH                         // Add Sonoff MagicSwitch support as implemented in Sonoff Basic R4 (+612B flash, +64B IRAM for intr)
 //  #define MAGICSWITCH_MIN_PULSE  4000            // Overridable minimum pulse, also overridable by command MagicSwitchPulse (not saved to flash)
 //  #define MAGICSWITCH_MASKING_WINDOW_LEN  5      // Overridable masking window (in number of 50ms loops)
 
 // -- Optional light modules ----------------------
-#define USE_LIGHT                                // Add support for light control
-#define USE_WS2812                               // WS2812 Led string using library NeoPixelBus (+5k code, +1k mem, 232 iram) - Disable by //
-//  #define USE_WS2812_DMA                         // ESP8266 only, DMA supports only GPIO03 (= Serial RXD) (+1k mem). When USE_WS2812_DMA is enabled expect Exceptions on Pow
-  #define USE_WS2812_RMT  0                      // ESP32 only, hardware RMT support (default). Specify the RMT channel 0..7. This should be preferred to software bit bang.
-//  #define USE_WS2812_I2S  0                      // ESP32 only, hardware I2S support. Specify the I2S channel 0..2. This is exclusive from RMT. By default, prefer RMT support
-//  #define USE_WS2812_INVERTED                    // Use inverted data signal
-  #define USE_WS2812_HARDWARE  NEO_HW_WS2812     // Hardware type (NEO_HW_WS2812, NEO_HW_WS2812X, NEO_HW_WS2813, NEO_HW_SK6812, NEO_HW_LC8812, NEO_HW_APA106, NEO_HW_P9813)
-  #define USE_WS2812_CTYPE     NEO_GRB           // Color type (NEO_RGB, NEO_GRB, NEO_BRG, NEO_RBG, NEO_RGBW, NEO_GRBW)
+// #define USE_LIGHT                                // Add support for light control
+// #define USE_WS2812                               // WS2812 Led string using library NeoPixelBus (+5k code, +1k mem, 232 iram) - Disable by //
+// //  #define USE_WS2812_DMA                         // ESP8266 only, DMA supports only GPIO03 (= Serial RXD) (+1k mem). When USE_WS2812_DMA is enabled expect Exceptions on Pow
+//   #define USE_WS2812_RMT  0                      // ESP32 only, hardware RMT support (default). Specify the RMT channel 0..7. This should be preferred to software bit bang.
+// //  #define USE_WS2812_I2S  0                      // ESP32 only, hardware I2S support. Specify the I2S channel 0..2. This is exclusive from RMT. By default, prefer RMT support
+// //  #define USE_WS2812_INVERTED                    // Use inverted data signal
+//   #define USE_WS2812_HARDWARE  NEO_HW_WS2812     // Hardware type (NEO_HW_WS2812, NEO_HW_WS2812X, NEO_HW_WS2813, NEO_HW_SK6812, NEO_HW_LC8812, NEO_HW_APA106, NEO_HW_P9813)
+  // #define USE_WS2812_CTYPE     NEO_GRB           // Color type (NEO_RGB, NEO_GRB, NEO_BRG, NEO_RBG, NEO_RGBW, NEO_GRBW)
 #define USE_MY92X1                               // Add support for MY92X1 RGBCW led controller as used in Sonoff B1, Ailight and Lohas
 #define USE_SM16716                              // Add support for SM16716 RGB LED controller (+0k7 code)
 #define USE_SM2135                               // Add support for SM2135 RGBCW led control as used in Action LSC (+0k6 code)
@@ -730,8 +730,8 @@
 //                                                 // Both settings together allow to limit searching for INA3221 to only a subset of addresses
 //    #define  INA3221_CALC_CHARGE_AH              // calculate charge in Ah
 //    #define  INA3221_CALC_ENERGY_WH              // calculate energy in Wh
-//    #define  INA3221_SUPPLY_SIDE      0x7777     // the driver adds the measured Shunt Voltage to the Bus Voltage 
-                                                   // for the cannel with a negativ shunt (shunt <0) thus showing the values of the supply side (IN+) 
+//    #define  INA3221_SUPPLY_SIDE      0x7777     // the driver adds the measured Shunt Voltage to the Bus Voltage
+                                                   // for the cannel with a negativ shunt (shunt <0) thus showing the values of the supply side (IN+)
                                                    // additionaly the bits set (bit 0,1,2) enable the scanning of the voltage in the according channel
 //  #define USE_PMSA003I                           // [I2cDriver78] Enable PMSA003I Air Quality Sensor (I2C address 0x12) (+1k8 code)
 //  #define USE_GDK101                             // [I2cDriver79] Enable GDK101 sensor (I2C addresses 0x18 - 0x1B) (+1k2 code)
@@ -885,7 +885,7 @@
 //#define USE_WOOLIIS                              // Add support for Wooliis Hall Effect Coulometer or Battery capacity monitor (+1k6 code)
 
 // -- Power monitoring sensors --------------------
-#define USE_ENERGY_SENSOR                        // Add support for Energy Monitors (+14k code)
+// #define USE_ENERGY_SENSOR                        // Add support for Energy Monitors (+14k code)
 #define USE_ENERGY_MARGIN_DETECTION              // Add support for Energy Margin detection (+1k6 code)
   #define USE_ENERGY_POWER_LIMIT                 // Add additional support for Energy Power Limit detection (+1k2 code)
 #define USE_ENERGY_DUMMY                         // Add support for dummy Energy monitor allowing user values (+0k7 code)
@@ -944,11 +944,11 @@
 // Code impact of IR full protocols is +90k code, 3k mem
 
 // -- IR Remote features - subset of IR protocols --------------------------
-#define USE_IR_REMOTE                            // Send IR remote commands using library IRremoteESP8266 (+4k3 code, 0k3 mem, 48 iram)
-  #define IR_SEND_INVERTED          false        // Invert the output. (default = false) e.g. LED is illuminated when GPIO is LOW rather than HIGH.
-                                                 // Setting inverted to something other than the default could easily destroy your IR LED if you are overdriving it.
-                                                 // Unless you REALLY know what you are doing, don't change this.
-  #define IR_SEND_USE_MODULATION    true         // Do we do frequency modulation during transmission? i.e. If not, assume a 100% duty cycle.
+// #define USE_IR_REMOTE                            // Send IR remote commands using library IRremoteESP8266 (+4k3 code, 0k3 mem, 48 iram)
+//   #define IR_SEND_INVERTED          false        // Invert the output. (default = false) e.g. LED is illuminated when GPIO is LOW rather than HIGH.
+//                                                  // Setting inverted to something other than the default could easily destroy your IR LED if you are overdriving it.
+//                                                  // Unless you REALLY know what you are doing, don't change this.
+//   #define IR_SEND_USE_MODULATION    true         // Do we do frequency modulation during transmission? i.e. If not, assume a 100% duty cycle.
 
   // ====> IR Full protocols are enabled with the line below
   // #define USE_IR_REMOTE_FULL                     // Support all IR protocols from IRremoteESP8266
@@ -969,17 +969,17 @@
 
   // When using 'USE_IR_REMOTE_FULL', parameters below
   // (USE_IR_REMOTE, USE_IR_RECEIVE, USE_IR_HVAC...) are IGNORED.
-  #define USE_IR_SEND_NEC                        // Support IRsend NEC protocol
-  #define USE_IR_SEND_RC5                        // Support IRsend Philips RC5 protocol
-  #define USE_IR_SEND_RC6                        // Support IRsend Philips RC6 protocol
+  // #define USE_IR_SEND_NEC                        // Support IRsend NEC protocol
+  // #define USE_IR_SEND_RC5                        // Support IRsend Philips RC5 protocol
+  // #define USE_IR_SEND_RC6                        // Support IRsend Philips RC6 protocol
 
   // Enable IR devoder via GPIO `IR Recv` - always enabled if `USE_IR_REMOTE_FULL`
-  #define USE_IR_RECEIVE                         // Support for IR receiver (+7k2 code, 264 iram)
-    #define IR_RCV_BUFFER_SIZE      100          // Max number of packets allowed in capture buffer (default 100 (*2 bytes ram))
-    #define IR_RCV_TIMEOUT          15           // Number of milli-Seconds of no-more-data before we consider a message ended (default 15)
-    #define IR_RCV_MIN_UNKNOWN_SIZE 6            // Set the smallest sized "UNKNOWN" message packets we actually care about (default 6, max 255)
-    #define IR_RCV_WHILE_SENDING    0            // Turns on receiver while sending messages, i.e. receive your own. This is unreliable and can cause IR timing issues
-    #define IR_RCV_TOLERANCE        25           // Base tolerance percentage for matching incoming IR messages (default 25, max 100)
+  // #define USE_IR_RECEIVE                         // Support for IR receiver (+7k2 code, 264 iram)
+  //   #define IR_RCV_BUFFER_SIZE      100          // Max number of packets allowed in capture buffer (default 100 (*2 bytes ram))
+  //   #define IR_RCV_TIMEOUT          15           // Number of milli-Seconds of no-more-data before we consider a message ended (default 15)
+  //   #define IR_RCV_MIN_UNKNOWN_SIZE 6            // Set the smallest sized "UNKNOWN" message packets we actually care about (default 6, max 255)
+  //   #define IR_RCV_WHILE_SENDING    0            // Turns on receiver while sending messages, i.e. receive your own. This is unreliable and can cause IR timing issues
+  //   #define IR_RCV_TOLERANCE        25           // Base tolerance percentage for matching incoming IR messages (default 25, max 100)
 
 // -- SD Card support -----------------------------
 // #define USE_SDCARD                               // mount SD Card, requires configured SPI pins and setting of `SDCard CS` gpio
