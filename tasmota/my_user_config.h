@@ -172,7 +172,7 @@
 #define MQTT_BUTTON_SWITCH_FORCE_LOCAL   false   // [SetOption61] Force local operation when button/switch topic is set (false = off, true = on)
 #define MQTT_INDEX_SEPARATOR   false             // [SetOption64] Enable "_" instead of "-" as sensor index separator
 #define MQTT_TUYA_RECEIVED     false             // [SetOption66] Enable TuyaMcuReceived messages over Mqtt
-#define MQTT_TLS_ENABLED       false             // [SetOption103] Enable TLS mode (requires TLS version)
+#define MQTT_TLS_ENABLED       true             // [SetOption103] Enable TLS mode (requires TLS version)
 #define MQTT_TLS_FINGERPRINT   false             // [SetOption132] Force TLS fingerprint validation instead of CA (requires TLS version)
 
 // -- HTTP ----------------------------------------
@@ -261,7 +261,7 @@
 #define TIME_STD_WEEK          1                 // Week of month (0 or Last, 1 or First, 2 or Second, 3 or Third, 4 or Fourth)
 #define TIME_STD_DAY           Sun               // Day of week (1 or Sun, 2 or Mon, 3 or Tue, 4 or Wed, 5 or Thu, 6 or Fri, 7 or Sat)
 #define TIME_STD_MONTH         Nov               // Month (1 or Jan, 2 or Feb, 3 or Mar, 4 or Apr, 5 or May, 6 or Jun, 7 or Jul, 8 or Aug, 9 or Sep, 10 or Oct, 11 or Nov, 12 or Dec)
-#define TIME_STD_HOUR          3                 // Hour (0 to 23)
+#define TIME_STD_HOUR          2                 // Hour (0 to 23)
 #define TIME_STD_OFFSET        -300               // Offset from UTC in minutes (-780 to +780)
 
 // -- Location ------------------------------------
@@ -280,7 +280,7 @@
                                                  //   (POWER_ALL_OFF, POWER_ALL_ON, POWER_ALL_SAVED_TOGGLE, POWER_ALL_SAVED, POWER_ALL_ALWAYS_ON, POWER_ALL_OFF_PULSETIME_ON)
 #define APP_BLINKTIME          10                // [BlinkTime] Time in 0.1 Sec to blink/toggle power for relay 1
 #define APP_BLINKCOUNT         10                // [BlinkCount] Number of blinks (0 = 32000)
-#define APP_BISTABLE_PULSE     40                // [SetOption45] Pulse time in ms for two coil bistable latching relays
+#define APP_BISTABLE_PULSE     0                // [SetOption45] Pulse time in ms for two coil bistable latching relays
 
 #define APP_NORMAL_SLEEP       false             // [SetOption60] Enable normal sleep instead of dynamic sleep
 #define TASMOTA_SLEEP          50                // [Sleep] Sleep time to lower energy consumption (0 = Off, value in milliseconds),
